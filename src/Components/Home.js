@@ -2,7 +2,7 @@ import { useState } from "react";
 
 
 const Home = () => {
-    
+
     return ( 
         <div className="p-1 m-1">
         <div className="card">
