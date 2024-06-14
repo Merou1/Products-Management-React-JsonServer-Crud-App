@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCheckCircle, faCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 const Products = () => {
-    const[products,setProducts]=useState([
-        {id:1,name:"computer",price:4300,checked:false},
-        {id:2,name:"printer",price:3200,checked:true},
-        {id:3,name:"smart phone",price:1200,checked:false}
-    ])
+    const[products,setProducts]=useState([])
+    useEffect(()=>{
+        handleGetProducts();
+    })
+    const handleGetProducts=()=>{
+        axios.get("http://localhost:3000/products/").then(
+            res=>{
+                const products=res.data;
+                setProducts(products)
+            }
+        ).catch(e=>console.log(e))
+    }
     const handleDeleteProduct=product=>{
         const newProducts=products.filter(p=>p.id!=product.id)
         setProducts(newProducts)
