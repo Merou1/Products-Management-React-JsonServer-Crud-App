@@ -5,30 +5,48 @@ import axios from "axios";
 import { deleteProduct, getProducts, checkProduct } from "../app/app";
 
 const Products = () => {
-    const[products,setProducts]=useState([])
+    const[state,setState]=useState({
+        products:[],
+        currentPage:1,
+        pageSize:4,
+        keyword:"",
+        totalPages:0
+    })
     useEffect(()=>{
-        handleGetProducts();
+        handleGetProducts(state.keyword,state.currentPage,state.pageSize);
     },[])
-    const handleGetProducts=()=>{
-        getProducts().then(resp=>{
-            setProducts(resp.data)
+
+    const handleGetProducts=(keyword,page,size)=>{
+        getProducts(keyword,page,size)
+        .then(resp=>{
+            const totalElements=resp.headers['x-total-count']
+            console.log(parseInt(totalElements))
+            let totalPages=Math.floor(totalElements/size)
+            if(totalElements%size!==0) ++totalPages
+            setState({ 
+                products: resp.data,
+                keyword:keyword,
+                currentPage:page,
+                pageSize:size,
+                totalPages:totalPages
+            });
         }).catch(e=>console.log(e))
     }
     const handleDeleteProduct=product=>{
         deleteProduct(product).then(
             resp=>{
-                const newProducts=products.filter(p=>p.id!=product.id)
-                setProducts(newProducts)
+                const newProducts=state.products.filter(p=>p.id!=product.id)
+                setState({...state,products:newProducts});
             }
         ).catch(e=>console.log(e))
     }
     const handleCheckButton=product=>{
         checkProduct(product).then(resp=>{
-        const newProducts=products.map(p=>{
+        const newProducts=state.products.map(p=>{
             if( p.id==product.id) {p.checked=!p.checked}
             return p
         })
-        setProducts(newProducts)
+        setState({...state, products:newProducts})
     }).catch(e=>console.log(e))
     }
     return ( 
@@ -48,7 +66,7 @@ const Products = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map(product=>{
+                        {state.products.map(product=>{
                             return(
                             <tr key={product.id}>
                                 <td>{product.id}</td>
@@ -69,6 +87,17 @@ const Products = () => {
                         })}
                     </tbody>
                 </table>
+                <ul className="nav nav-pills">
+                    {
+                        new Array(state.totalPages).fill(0).map((v,index)=>{
+                            return(
+                            <li>
+                                <button>{index+1}</button>
+                            </li>
+                        )})
+                    }
+                </ul>
+
             </div>
         </div>
                 </div>

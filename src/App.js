@@ -27,6 +27,9 @@ function App() {
         <li>
           <Link className={currentRoute=="products"?"btn btn-info ms-1":"btn btn-outline-info ms-1"} onClick={() => setCurrentRoute("products")} to={"/products"}>Products</Link>
         </li>
+        <li>
+          <Link className={currentRoute=="new"?"btn btn-info ms-1":"btn btn-outline-info ms-1"}  onClick={() => setCurrentRoute("new")} to={"/new"}>New Product</Link>
+        </li>
       </ul>
     </nav>
     <Routes>

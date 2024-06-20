@@ -11,6 +11,36 @@
       "name": "Smart phone",
       "price": 5000,
       "checked": false
+    },
+    {
+      "id": "9e1c",
+      "name": "Computer",
+      "price": "8000",
+      "checked": true
+    },
+    {
+      "id": "dbf6",
+      "name": "Phone",
+      "price": "01000",
+      "checked": true
+    },
+    {
+      "id": "f4e0",
+      "name": "jfjf",
+      "price": "07770",
+      "checked": true
+    },
+    {
+      "id": "22dc",
+      "name": "kkf",
+      "price": "06768",
+      "checked": false
+    },
+    {
+      "id": "f869",
+      "name": "kdfk",
+      "price": "06877",
+      "checked": false
     }
   ]
 }
