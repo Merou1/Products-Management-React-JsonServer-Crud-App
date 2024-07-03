@@ -12,7 +12,7 @@ import { deleteProduct, getProducts, checkProduct } from "../app/app";
 import { query } from "express";
 
 const Products = () => {
-  const [query,setQuery]=useState("")
+  const [query, setQuery] = useState("");
   const [state, setState] = useState({
     products: [],
     currentPage: 1,
@@ -20,7 +20,7 @@ const Products = () => {
     keyword: "",
     totalPages: 0,
   });
-  useEffect(() => { 
+  useEffect(() => {
     handleGetProducts(state.keyword, state.currentPage, state.pageSize);
   }, []);
 
@@ -64,31 +64,37 @@ const Products = () => {
   const handleGoToPage = (page) => {
     handleGetProducts(state.keyword, page, state.pageSize);
   };
-  const handleSearch=(e)=>{
-    e.preventDefault()
-    setState({...state,keyword:query})
-
-  }
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setState({ ...state, keyword: query });
+  };
   return (
     <div className="p-1 m-1">
       <div className="row">
         <div className="col-md6">
-            <div className="card m-1">
+          <div className="card m-1">
             <div className="card-body">
-                <form onSubmit={handleSearch} action="">
-                    <div className="row g-2">
-                        <div className="col-auto">
-                            <input value={query} onChange={e=>{setQuery(e.target.value)}} className="form-control" type="text" />
-                        </div>
-                        <div className="col-auto">
-                            <button className="btn btn-success">
-                                <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+              <form onSubmit={handleSearch} action="">
+                <div className="row g-2">
+                  <div className="col-auto">
+                    <input
+                      value={query}
+                      onChange={(e) => {
+                        setQuery(e.target.value);
+                      }}
+                      className="form-control"
+                      type="text"
+                    />
+                  </div>
+                  <div className="col-auto">
+                    <button className="btn btn-success">
+                      <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
-            </div>
+          </div>
           <div className="card m-1">
             <div className="card-body">
               <table className="table">
@@ -140,7 +146,7 @@ const Products = () => {
                   return (
                     <li>
                       <button
-                        onClick={()=>handleGoToPage(index + 1)}
+                        onClick={() => handleGoToPage(index + 1)}
                         className={
                           index + 1 == state.currentPage
                             ? "btn btn-info ms-1"
